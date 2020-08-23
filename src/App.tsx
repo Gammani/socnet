@@ -10,7 +10,6 @@ function App() {
         <Header />
         <Navbar />
         <Profile />
-        <h1>222</h1>
       </div>
   );
 }
