@@ -2,30 +2,49 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 
+type DialogItemPropsType = {
+    id: string
+    name: string
+}
+
+type MessagePropsType = {
+    message: string
+}
+
+const DialogItem = (props: DialogItemPropsType) => {
+    let path = "/dialogs/" + props.id;
+
+    return (
+        <div className={s.dialog}>
+            <NavLink to={path} activeClassName={s.active}>{props.name}</NavLink>
+        </div>
+    )
+}
+
+
+const Message = (props: MessagePropsType) => {
+    return (
+        <div className={s.message}>
+            {props.message}
+        </div>
+    )
+}
+
+
 const Dialogs = () => {
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                <div className={s.dialog}>
-                    <NavLink to="/dialogs/1" activeClassName={s.active}>Kleo</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to="/dialogs/2" activeClassName={s.active}>Hiperion</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to="/dialogs/3" activeClassName={s.active}>Suzi</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to="/dialogs/4" activeClassName={s.active}>Gektar</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to="/dialogs/5" activeClassName={s.active}>Chuck</NavLink>
-                </div>
+                <DialogItem id={"1"} name={"Kleo"} />
+                <DialogItem id={"2"} name={"Hiperion"} />
+                <DialogItem id={"3"} name={"Suzi"} />
+                <DialogItem id={"4"} name={"Gektar"} />
+                <DialogItem id={"5"} name={"Chuck"} />
             </div>
             <div className={s.messages}>
-                <div className={s.message}>Hey</div>
-                <div className={s.message}>Yo man</div>
-                <div className={s.message}>hu you piople?</div>
+                <Message message={"Hey"} />
+                <Message message={"Yo man"} />
+                <Message message={"hu you piople?"} />
             </div>
         </div>
     )
