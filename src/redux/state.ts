@@ -1,3 +1,5 @@
+import {v1} from "uuid";
+
 type DialogsType = {
     id: string
     name: string
@@ -8,7 +10,7 @@ type MessagesType = {
     message: string
 }
 
-type PostsType = {
+export type PostsType = {
     id: string
     message: string
     likesCount: number
@@ -31,24 +33,33 @@ export type RootStateType = {
 let state: RootStateType = {
     dialogsPage: {
         dialogs: [
-            {id: "1", name: "Kleo"},
-            {id: "2", name: "Hiperion"},
-            {id: "3", name: "Suzi"},
-            {id: "4", name: "Gektar"},
-            {id: "5", name: "Chuck"}
+            {id: v1(), name: "Kleo"},
+            {id: v1(), name: "Hiperion"},
+            {id: v1(), name: "Suzi"},
+            {id: v1(), name: "Gektar"},
+            {id: v1(), name: "Chuck"}
         ],
         messages: [
-            {id: "1", message: "Hey"},
-            {id: "2", message: "Yo man"},
-            {id: "3", message: "hu you piople?"}
+            {id: v1(), message: "Hey"},
+            {id: v1(), message: "Yo man"},
+            {id: v1(), message: "hu you piople?"}
         ]
     },
     profilePage: {
         posts: [
-            {id: "1", message: "Hello, it's my first post lol", likesCount: 777},
-            {id: "2", message: "hu a you man?", likesCount: 1327}
+            {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
+            {id: v1(), message: "hu a you man?", likesCount: 1327}
         ]
     }
+}
+
+export const addPost = (newText: string) => {
+    const newPost: PostsType = {
+        id: v1(),
+        message: newText,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost);
 }
 
 export default state;
