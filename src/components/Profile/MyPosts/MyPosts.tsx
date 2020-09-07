@@ -1,11 +1,17 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {profilePageType} from "../../../redux/state";
+import {ProfilePageType} from "../../../redux/state";
 
-const MyPosts = (props: profilePageType) => {
+
+const MyPosts: React.FC<ProfilePageType> = (props) => {
 
     let postsElements = props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    let postMessageRef = React.createRef<HTMLTextAreaElement>();
+
+    function addPost() {
+        alert(postMessageRef.current?.value);
+    }
 
     return (
         <div className={s.postsBlock}>
@@ -13,8 +19,8 @@ const MyPosts = (props: profilePageType) => {
                 <div>
                     My post
                 </div>
-                <textarea/>
-                <button>add post</button>
+                <textarea ref={postMessageRef}/>
+                <button onClick={addPost}>add post</button>
                 {postsElements}
             </div>
         </div>
@@ -22,4 +28,3 @@ const MyPosts = (props: profilePageType) => {
 }
 
 export default MyPosts;
-

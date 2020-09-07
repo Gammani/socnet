@@ -8,13 +8,13 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Setting from "./components/Setting/Setting";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {rootStateType} from "./redux/state";
+import {RootStateType} from "./redux/state";
 
-type propsType = {
-    state: rootStateType
+type PropsType = {
+    state: RootStateType
 }
 
-function App(props: propsType) {
+function App(props: PropsType) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
