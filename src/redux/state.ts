@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEtireTree} from "../render";
 
 type DialogsType = {
     id: string
@@ -60,6 +61,7 @@ export const addPost = (newText: string) => {
         likesCount: 0
     }
     state.profilePage.posts.push(newPost);
+    rerenderEtireTree(state);
 }
 
 export default state;

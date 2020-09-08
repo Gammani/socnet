@@ -10,12 +10,14 @@ type PropsType = {
 
 const MyPosts: React.FC<PropsType> = (props) => {
 
-    let postsElements = props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post
+        key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
     let postMessageRef = React.createRef<HTMLTextAreaElement>();
 
     function addPost() {
-        if(postMessageRef.current) {
+        if (postMessageRef.current) {
             props.addPost(postMessageRef.current.value);
+            postMessageRef.current.value = '';
         }
     }
 
