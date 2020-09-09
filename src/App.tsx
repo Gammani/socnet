@@ -13,6 +13,7 @@ import {RootStateType} from "./redux/state";
 type PropsType = {
     state: RootStateType
     addPost: (newText: string) => void
+    changeNewText: (newText: string) => void
 }
 
 function App(props: PropsType) {
@@ -25,6 +26,7 @@ function App(props: PropsType) {
                     <Route path='/profile' render={() => <Profile
                         profilePage={props.state.profilePage}
                         addPost={props.addPost}
+                        changeNewText={props.changeNewText}
                     />}/>
                     <Route path='/dialogs' render={() => <Dialogs
                         dialogsPage={props.state.dialogsPage}

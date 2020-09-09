@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {rerenderEtireTree} from "../render";
+import {rerenderEntireTree} from "../render";
 
 type DialogsType = {
     id: string
@@ -24,6 +24,7 @@ export type DialogsPageType = {
 
 export type ProfilePageType = {
     posts: Array<PostsType>
+    messageForNewPost: string
 }
 
 export type RootStateType = {
@@ -50,7 +51,8 @@ let state: RootStateType = {
         posts: [
             {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
             {id: v1(), message: "hu a you man?", likesCount: 1327}
-        ]
+        ],
+        messageForNewPost: ""
     }
 }
 
@@ -61,7 +63,12 @@ export const addPost = (newText: string) => {
         likesCount: 0
     }
     state.profilePage.posts.push(newPost);
-    rerenderEtireTree(state);
+    rerenderEntireTree(state);
+}
+
+export const changeNewText = (newText: string) => {
+    state.profilePage.messageForNewPost = newText;
+    rerenderEntireTree(state);
 }
 
 export default state;
