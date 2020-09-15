@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {rerenderEntireTree} from "../render";
 
 type DialogsType = {
     id: string
@@ -32,43 +31,62 @@ export type RootStateType = {
     profilePage: ProfilePageType
 }
 
-let state: RootStateType = {
-    dialogsPage: {
-        dialogs: [
-            {id: v1(), name: "Kleo"},
-            {id: v1(), name: "Hiperion"},
-            {id: v1(), name: "Suzi"},
-            {id: v1(), name: "Gektar"},
-            {id: v1(), name: "Chuck"}
-        ],
-        messages: [
-            {id: v1(), message: "Hey"},
-            {id: v1(), message: "Yo man"},
-            {id: v1(), message: "hu you piople?"}
-        ]
+export type StoreType = {
+    _state: RootStateType
+    changeNewText: (newText: string) => void
+    addPost: (newText: string) => void
+    _rerenderEntireTree: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => RootStateType
+}
+
+
+const store: StoreType = {
+    _state: {
+        dialogsPage: {
+            dialogs: [
+                {id: v1(), name: "Kleo"},
+                {id: v1(), name: "Hiperion"},
+                {id: v1(), name: "Susan"},
+                {id: v1(), name: "Gektar"},
+                {id: v1(), name: "Chuck"}
+            ],
+            messages: [
+                {id: v1(), message: "Hey"},
+                {id: v1(), message: "Yo man"},
+                {id: v1(), message: "hu you piople?"}
+            ]
+        },
+        profilePage: {
+            posts: [
+                {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
+                {id: v1(), message: "hu a you man?", likesCount: 1327}
+            ],
+            messageForNewPost: ""
+        }
     },
-    profilePage: {
-        posts: [
-            {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
-            {id: v1(), message: "hu a you man?", likesCount: 1327}
-        ],
-        messageForNewPost: ""
+    changeNewText(newText: string) {
+        store._state.profilePage.messageForNewPost = newText;
+        store._rerenderEntireTree();
+    },
+    addPost(newText: string) {
+        const newPost: PostsType = {
+            id: v1(),
+            message: newText,
+            likesCount: 0
+        }
+        store._state.profilePage.posts.push(newPost);
+        store._rerenderEntireTree();
+    },
+    _rerenderEntireTree() {
+        console.log("hello");
+    },
+    subscribe(callback) {
+        store._rerenderEntireTree = callback;
+    },
+    getState() {
+        return this._state;
     }
 }
 
-export const addPost = (newText: string) => {
-    const newPost: PostsType = {
-        id: v1(),
-        message: newText,
-        likesCount: 0
-    }
-    state.profilePage.posts.push(newPost);
-    rerenderEntireTree(state);
-}
-
-export const changeNewText = (newText: string) => {
-    state.profilePage.messageForNewPost = newText;
-    rerenderEntireTree(state);
-}
-
-export default state;
+export default store;
