@@ -4,40 +4,44 @@ type DialogsType = {
     id: string
     name: string
 }
-
 type MessagesType = {
     id: string
     message: string
 }
-
 export type PostsType = {
     id: string
     message: string
     likesCount: number
 }
-
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
 }
-
 export type ProfilePageType = {
     posts: Array<PostsType>
     messageForNewPost: string
 }
-
 export type RootStateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
 }
 
+type AddPostActionType = {
+    type: "ADD-POST"
+    newText: string
+}
+type ChangeNewTextActionType = {
+    type: "CHANGE-NEW-TEXT"
+    newText: string
+}
+export type ActionsType = AddPostActionType | ChangeNewTextActionType
+
 export type StoreType = {
     _state: RootStateType
-    changeNewText: (newText: string) => void
-    addPost: (newText: string) => void
     _rerenderEntireTree: () => void
     subscribe: (callback: () => void) => void
     getState: () => RootStateType
+    dispatch: (action: ActionsType) => void
 }
 
 
@@ -65,27 +69,30 @@ const store: StoreType = {
             messageForNewPost: ""
         }
     },
-    changeNewText(newText: string) {
-        store._state.profilePage.messageForNewPost = newText;
-        store._rerenderEntireTree();
-    },
-    addPost(newText: string) {
-        const newPost: PostsType = {
-            id: v1(),
-            message: newText,
-            likesCount: 0
-        }
-        store._state.profilePage.posts.push(newPost);
-        store._rerenderEntireTree();
-    },
     _rerenderEntireTree() {
         console.log("hello");
     },
-    subscribe(callback) {
-        store._rerenderEntireTree = callback;
+
+    subscribe(observer) {
+        store._rerenderEntireTree = observer;
     },
     getState() {
         return this._state;
+    },
+
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            const newPost: PostsType = {
+                id: v1(),
+                message: action.newText,
+                likesCount: 0
+            }
+            store._state.profilePage.posts.unshift(newPost);
+            store._rerenderEntireTree();
+        } else if (action.type === "CHANGE-NEW-TEXT") {
+            store._state.profilePage.messageForNewPost = action.newText;
+            store._rerenderEntireTree();
+        }
     }
 }
 
