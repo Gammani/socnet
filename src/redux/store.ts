@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import profileReducer, {ProfileReducerActionsType} from "./propfile-reducer";
+import dialogsReducer, {DialogsReducerActionType} from "./dialogs-reducer";
 
 type DialogsType = {
     id: string
@@ -16,6 +18,7 @@ export type PostsType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
+    newPostBody: string
 }
 export type ProfilePageType = {
     posts: Array<PostsType>
@@ -26,36 +29,14 @@ export type RootStateType = {
     profilePage: ProfilePageType
 }
 
-type AddPostActionType = {
-    type: "ADD-POST"
-    newText: string
-}
-type ChangeNewTextActionType = {
-    type: "CHANGE-NEW-TEXT"
-    newText: string
-}
-export type ActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
+export type ActionType = ProfileReducerActionsType | DialogsReducerActionType
 
 export type StoreType = {
     _state: RootStateType
-    _rerenderEntireTree: () => void
+    _callSubscriber: () => void
     subscribe: (callback: () => void) => void
     getState: () => RootStateType
-    dispatch: (action: ActionsType) => void
-}
-
-
-export const addPostAC = (newText: string): AddPostActionType => {
-    return {
-        type: "ADD-POST",
-        newText
-    } as const
-}
-export const changeNewTextAC = (newText: string): ChangeNewTextActionType => {
-    return {
-        type: "CHANGE-NEW-TEXT",
-        newText
-    } as const
+    dispatch: (action: ActionType) => void
 }
 
 
@@ -73,7 +54,8 @@ const store: StoreType = {
                 {id: v1(), message: "Hey"},
                 {id: v1(), message: "Yo man"},
                 {id: v1(), message: "hu you piople?"}
-            ]
+            ],
+            newPostBody: ""
         },
         profilePage: {
             posts: [
@@ -83,30 +65,21 @@ const store: StoreType = {
             messageForNewPost: ""
         }
     },
-    _rerenderEntireTree() {
+    _callSubscriber() {
         console.log("hello");
     },
 
     subscribe(observer) {
-        store._rerenderEntireTree = observer;
+        store._callSubscriber = observer;
     },
     getState() {
         return this._state;
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            const newPost: PostsType = {
-                id: v1(),
-                message: action.newText,
-                likesCount: 0
-            }
-            store._state.profilePage.posts.unshift(newPost);
-            store._rerenderEntireTree();
-        } else if (action.type === "CHANGE-NEW-TEXT") {
-            store._state.profilePage.messageForNewPost = action.newText;
-            store._rerenderEntireTree();
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._callSubscriber();
     }
 }
 

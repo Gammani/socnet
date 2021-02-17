@@ -8,11 +8,13 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Setting from "./components/Setting/Setting";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {ActionsType, RootStateType} from "./redux/store";
+import {ActionType, RootStateType, StoreType} from "./redux/store";
+
 
 type PropsType = {
     state: RootStateType
-    dispatch: (action: ActionsType) => void
+    dispatch: (action: ActionType) => void
+    store: StoreType
 }
 
 function App(props: PropsType) {
@@ -27,7 +29,7 @@ function App(props: PropsType) {
                         dispatch={props.dispatch}
                     />}/>
                     <Route path='/dialogs' render={() => <Dialogs
-                        dialogsPage={props.state.dialogsPage}
+                        store={props.store}
                     />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
