@@ -8,7 +8,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Setting from "./components/Setting/Setting";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {ActionsType, RootStateType} from "./redux/state";
+import {ActionsType, RootStateType} from "./redux/store";
 
 type PropsType = {
     state: RootStateType
