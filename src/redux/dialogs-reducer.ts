@@ -5,14 +5,30 @@ type UpdateNewMessageBodyActionType = {
     type: "UPDATE-NEW-MESSAGE-BODY"
     body: string
 }
-
 type SendMessageActionType = {
     type: "SEND-MESSAGE"
 }
-
 export type DialogsReducerActionType = ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
 
-const dialogsReducer = (state: DialogsPageType, action: ActionType): DialogsPageType => {
+
+let initialState: DialogsPageType = {
+    dialogs: [
+        {id: v1(), name: "Kleo"},
+        {id: v1(), name: "Hiperion"},
+        {id: v1(), name: "Susan"},
+        {id: v1(), name: "Gektar"},
+        {id: v1(), name: "Chuck"}
+    ],
+    messages: [
+        {id: v1(), message: "Hey"},
+        {id: v1(), message: "Yo man"},
+        {id: v1(), message: "hu you piople?"}
+    ],
+    newPostBody: ""
+}
+
+
+const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY": {
             store._state.dialogsPage.newPostBody = action.body;

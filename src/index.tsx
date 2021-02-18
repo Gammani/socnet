@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import store from "./redux/store";
+import store, {RootStateType} from "./redux/store";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-let _callSubscriber = () => {
+let rerenderEntireTree = (state: RootStateType) => {
     ReactDOM.render(<App state={store.getState()}
                          dispatch={store.dispatch.bind(store)}
                          store={store}
@@ -13,8 +13,13 @@ let _callSubscriber = () => {
     />, document.getElementById('root'));
 }
 
-store.subscribe(_callSubscriber);
-_callSubscriber();
+rerenderEntireTree(store.getState());
+
+store.subscribe(() => {
+    let state: RootStateType = store.getState();
+    rerenderEntireTree(state);
+})
+
 
 
 // store.subscribe(rerenderEntireTree);
