@@ -1,4 +1,4 @@
-import store, {ActionType, PostsType, ProfilePageType} from "./store";
+import {ActionType, PostsType, ProfilePageType} from "./store";
 import {v1} from "uuid";
 
 type AddPostActionType = {
@@ -21,21 +21,19 @@ let initialState: ProfilePageType = {
 }
 
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType=> {
-    switch(action.type) {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
+    switch (action.type) {
         case "ADD-POST": {
             const newPost: PostsType = {
                 id: v1(),
                 message: action.newText,
                 likesCount: 0
             };
-            store._state.profilePage.posts.unshift(newPost);
-            store._callSubscriber();
+            state.posts.unshift(newPost);
             return {...state};
         }
         case "CHANGE-NEW-TEXT": {
-            store._state.profilePage.messageForNewPost = action.newText;
-            store._callSubscriber();
+            state.messageForNewPost = action.newText;
             return {...state};
         }
         default:

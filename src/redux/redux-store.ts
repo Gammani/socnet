@@ -9,4 +9,7 @@ let reducers = combineReducers({
 
 let store = createStore(reducers);
 
+// определить автоматически тип всего объекта состояния
+export type AppRootStateType = ReturnType<typeof reducers>
+
 export default store;

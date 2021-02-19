@@ -1,4 +1,4 @@
-import store, {ActionType, DialogsPageType} from "./store";
+import {ActionType, DialogsPageType} from "./store";
 import {v1} from "uuid";
 
 type UpdateNewMessageBodyActionType = {
@@ -31,15 +31,13 @@ let initialState: DialogsPageType = {
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY": {
-            store._state.dialogsPage.newPostBody = action.body;
-            store._callSubscriber();
+            state.newPostBody = action.body;
             return {...state};
         }
         case "SEND-MESSAGE": {
             let body = state.newPostBody;
             state.messages.push({id: v1(), message: body});
             state.newPostBody = '';
-            store._callSubscriber();
             return state;
         }
         default:
