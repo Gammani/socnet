@@ -1,4 +1,4 @@
-import {ActionType, DialogsPageType} from "./store";
+import {ActionType} from "./store";
 import {v1} from "uuid";
 
 type UpdateNewMessageBodyActionType = {
@@ -10,6 +10,20 @@ type SendMessageActionType = {
 }
 export type DialogsReducerActionType = ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
 
+type DialogsType = {
+    id: string
+    name: string
+}
+type MessagesType = {
+    id: string
+    message: string
+}
+
+export type DialogsPageType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newPostBody: string
+}
 
 let initialState: DialogsPageType = {
     dialogs: [
