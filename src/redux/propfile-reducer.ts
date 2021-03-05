@@ -1,4 +1,3 @@
-import {ActionType} from "./store";
 import {v1} from "uuid";
 
 type AddPostActionType = {
@@ -8,6 +7,7 @@ type ChangeNewTextActionType = {
     type: "CHANGE-NEW-TEXT"
     newText: string
 }
+
 export type ProfileReducerActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
 
 
@@ -27,7 +27,7 @@ export type PostsType = {
     likesCount: number
 }
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerActionsType): InitialStateType => {
     switch (action.type) {
         case "ADD-POST": {
             const newPost: PostsType = {

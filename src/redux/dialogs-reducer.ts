@@ -1,4 +1,3 @@
-import {ActionType} from "./store";
 import {v1} from "uuid";
 
 type UpdateNewMessageBodyActionType = {
@@ -8,6 +7,7 @@ type UpdateNewMessageBodyActionType = {
 type SendMessageActionType = {
     type: "SEND-MESSAGE"
 }
+
 export type DialogsReducerActionType = ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
 
 type DialogsType = {
@@ -42,7 +42,7 @@ let initialState: DialogsPageType = {
 }
 
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
+const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsReducerActionType): DialogsPageType => {
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY":
             return {
