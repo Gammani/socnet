@@ -10,7 +10,7 @@ import {
     unFollowAC,
     UsersType
 } from "../../redux/users-reducer";
-import Users from "./Users";
+import UsersAPIContainer from "./UsersAPIContainer";
 
 
 type MapStatePropsType = {
@@ -19,6 +19,8 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
 }
+
+
 
 type MapDispatchPropsType = {
     follow: (userId: string) => void
@@ -57,4 +59,4 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer);
