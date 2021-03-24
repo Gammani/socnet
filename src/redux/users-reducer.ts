@@ -24,12 +24,12 @@ type setToggleIsFetchingActionCreator = {
 }
 
 export type UsersReducerActionsType =
-    ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setUsersCountAC>
-    | ReturnType<typeof setToggleIsFetchingAC>
+    ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setUsersCount>
+    | ReturnType<typeof setToggleIsFetching>
 
 
 let initialState = {
@@ -99,37 +99,37 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersReduc
     }
 }
 
-export const followAC = (userId: string): FollowActionType => {
+export const follow = (userId: string): FollowActionType => {
     return {
         type: "FOLLOW",
         userId
     } as const
 }
-export const unFollowAC = (userId: string): UnfollowActionType => {
+export const unFollow = (userId: string): UnfollowActionType => {
     return {
         type: "UNFOLLOW",
         userId
     } as const
 }
-export const setUsersAC = (users: Array<UsersType>): SetUsersActionType => {
+export const setUsers = (users: Array<UsersType>): SetUsersActionType => {
     return {
         type: "SET-USERS",
         users
     } as const
 }
-export const setCurrentPageAC = (currentPage: number): SetCurrentPageActionType => {
+export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => {
     return {
         type: "SET-CURRENT-PAGE",
         currentPage
     } as const
 }
-export const setUsersCountAC = (totalUsersCount: number): SetTotalUsersCountActionType => {
+export const setUsersCount = (totalUsersCount: number): SetTotalUsersCountActionType => {
     return {
         type: "SET-TOTAL-USER-COUNT",
         totalUsersCount
     } as const
 }
-export const setToggleIsFetchingAC = (isFetching: boolean): setToggleIsFetchingActionCreator => {
+export const setToggleIsFetching = (isFetching: boolean): setToggleIsFetchingActionCreator => {
     return {
         type: "TOGGLE-IS-FETCHING",
         isFetching
