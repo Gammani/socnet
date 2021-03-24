@@ -1,25 +1,9 @@
 import {v1} from "uuid";
+import {PhotosType} from "./users-reducer";
 
-type AddPostActionType = {
-    type: "ADD-POST"
-}
-type ChangeNewTextActionType = {
-    type: "CHANGE-NEW-TEXT"
-    newText: string
-}
-
-export type ProfileReducerActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
-
-
-let initialState = {
-    posts: [
-        {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
-        {id: v1(), message: "hu a you man?", likesCount: 1327}
-    ] as Array<PostsType>,
-    messageForNewPost: ""
-}
-
-export type InitialStateType = typeof initialState
+const ADD_POST = "ADD_POST";
+const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
 
 export type PostsType = {
     id: string
@@ -27,9 +11,66 @@ export type PostsType = {
     likesCount: number
 }
 
-const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerActionsType): InitialStateType => {
+type ContactsType = {
+    facebook: null | string
+    website: null | string
+    vk: null | string
+    twitter: null | string
+    instagram: null | string
+    youtube: null | string
+    github: null | string
+    mainLink: null | string
+}
+
+export type ProfType = {
+    aboutMe: null | string
+    contacts: ContactsType
+    lookingForAJob: null | boolean
+    lookingForAJobDescription: null | string
+    fullName: null | string
+    userId: null | number
+    photos: PhotosType
+}
+
+type AddPostActionType = {
+    type: typeof ADD_POST
+}
+type ChangeNewTextActionType = {
+    type: typeof CHANGE_NEW_TEXT
+    newText: string
+}
+export type ProfileType = ProfType | null
+
+type setUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: ProfileType
+}
+
+export type ProfilePageType = {
+    posts: Array<PostsType>
+    messageForNewPost: string
+    profile: ProfileType
+}
+
+export type ProfileReducerActionsType =
+    ReturnType<typeof addPost>
+    | ReturnType<typeof changeNewText>
+    | ReturnType<typeof setUserProfile>
+
+
+let initialState: ProfilePageType = {
+    posts: [
+        {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
+        {id: v1(), message: "hu a you man?", likesCount: 1327}
+    ] as Array<PostsType>,
+    messageForNewPost: "",
+    profile: null
+}
+
+
+const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerActionsType): ProfilePageType => {
     switch (action.type) {
-        case "ADD-POST": {
+        case ADD_POST: {
             const newPost: PostsType = {
                 id: v1(),
                 message: state.messageForNewPost,
@@ -40,25 +81,36 @@ const profileReducer = (state: InitialStateType = initialState, action: ProfileR
                 posts: [newPost, ...state.posts]
             }
         }
-        case "CHANGE-NEW-TEXT":
+        case CHANGE_NEW_TEXT:
             return {
                 ...state,
                 messageForNewPost: action.newText
+            }
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                profile: action.profile
             }
         default:
             return state;
     }
 }
 
-export const addPostAC = (): AddPostActionType => {
+export const addPost = (): AddPostActionType => {
     return {
-        type: "ADD-POST",
+        type: ADD_POST,
     } as const
 }
-export const changeNewTextAC = (newText: string): ChangeNewTextActionType => {
+export const changeNewText = (newText: string): ChangeNewTextActionType => {
     return {
-        type: "CHANGE-NEW-TEXT",
+        type: CHANGE_NEW_TEXT,
         newText
+    } as const
+}
+export const setUserProfile = (profile: ProfileType): setUserProfileActionType => {
+    return {
+        type: SET_USER_PROFILE,
+        profile
     } as const
 }
 

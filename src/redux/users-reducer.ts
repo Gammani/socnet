@@ -47,9 +47,9 @@ export type LocationType = {
     country: string
 }
 
-type PhotosType = {
-    small: string
-    large: string
+export type PhotosType = {
+    small: string | null
+    large: string | null
 }
 
 export type UsersType = {
