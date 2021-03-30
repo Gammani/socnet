@@ -17,4 +17,4 @@ export type AppStateType = ReturnType<typeof rootReducer>
 export const store = createStore(rootReducer);
 
 // определить автоматически тип всего объекта состояния
-export type AppRootStateType = ReturnType<typeof rootReducer>
+// export type AppRootStateType = ReturnType<typeof rootReducer>
