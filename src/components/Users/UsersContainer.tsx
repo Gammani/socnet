@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
     follow,
-    setCurrentPage,
+    setCurrentPage, setToggleFollowingProgress,
     setToggleIsFetching,
     setUsers,
     setUsersCount,
@@ -19,6 +19,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<string>
 }
 
 
@@ -28,7 +29,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -38,5 +40,6 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setUsersCount,
-    setToggleIsFetching
+    setToggleIsFetching,
+    setToggleFollowingProgress
 })(UsersAPIContainer);
