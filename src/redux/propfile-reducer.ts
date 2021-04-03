@@ -1,5 +1,7 @@
 import {v1} from "uuid";
 import {PhotosType} from "./users-reducer";
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT";
@@ -112,6 +114,15 @@ export const setUserProfile = (profile: ProfileType): setUserProfileActionType =
         type: SET_USER_PROFILE,
         profile
     } as const
+}
+
+export const userProfile = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data));
+            })
+    }
 }
 
 export default profileReducer;
