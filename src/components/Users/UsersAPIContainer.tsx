@@ -2,43 +2,32 @@ import React from "react";
 import {UsersType} from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 type PropsType = {
     users: Array<UsersType>
     pageSize: number
     totalUsersCount: number
-    follow: (userId: string) => void
-    unFollow: (userId: string) => void
-    setUsers: (users: Array<UsersType>) => void
+    acceptFollow: (userId: string) => void
+    acceptUnFollow: (userId: string) => void
     currentPage: number
     setCurrentPage: (pageNumber: number) => void
-    setUsersCount: (totalCount: number) => void
     isFetching: boolean
-    setToggleIsFetching: (isFetching: boolean) => void
     setToggleFollowingProgress: (isFetching: boolean, userId: string) => void
     followingInProgress: Array<string>
+    getUsers: (currentPage: number, pageSize: number) => void
+    follow: (userId: string) => void
+    unFollow: (userId: string) => void
 }
 
 class UsersAPIContainer extends React.Component <PropsType> {
 
     componentDidMount() {
-        this.props.setToggleIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setToggleIsFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setUsersCount(data.totalCount);
-            })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.setToggleIsFetching(true);
-        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-            this.props.setToggleIsFetching(false);
-            this.props.setUsers(data.items);
-        })
+        this.props.getUsers(pageNumber, this.props.pageSize);
     }
 
     render() {
@@ -51,11 +40,10 @@ class UsersAPIContainer extends React.Component <PropsType> {
                     totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
+                    onPageChanged={this.onPageChanged}
+                    followingInProgress={this.props.followingInProgress}
                     follow={this.props.follow}
                     unFollow={this.props.unFollow}
-                    onPageChanged={this.onPageChanged}
-                    setToggleFollowingProgress={this.props.setToggleFollowingProgress}
-                    followingInProgress={this.props.followingInProgress}
                 /> : ""}
 
             </>

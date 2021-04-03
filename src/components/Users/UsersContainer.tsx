@@ -2,13 +2,12 @@ import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
-    follow,
-    setCurrentPage, setToggleFollowingProgress,
-    setToggleIsFetching,
-    setUsers,
-    setUsersCount,
-    unFollow,
-    UsersType
+    acceptFollow,
+    getUsers,
+    setCurrentPage,
+    setToggleFollowingProgress,
+    acceptUnFollow,
+    UsersType, follow, unFollow
 } from "../../redux/users-reducer";
 import UsersAPIContainer from "./UsersAPIContainer";
 
@@ -35,11 +34,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 export default connect(mapStateToProps, {
-    follow,
-    unFollow,
-    setUsers,
+    acceptFollow,
+    acceptUnFollow,
     setCurrentPage,
-    setUsersCount,
-    setToggleIsFetching,
-    setToggleFollowingProgress
+    setToggleFollowingProgress,
+    getUsers,
+    follow,
+    unFollow
 })(UsersAPIContainer);
