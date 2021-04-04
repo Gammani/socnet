@@ -12,6 +12,7 @@ type PathParamsType = {
 
 type MapStatePropsType = {
     profile: ProfileType
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     userProfile: (userId: string) => void
@@ -39,7 +40,8 @@ class ProfileContainer extends React.Component<PropsType> {
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 
