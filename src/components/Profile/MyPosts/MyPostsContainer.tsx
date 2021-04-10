@@ -1,4 +1,3 @@
-import React from 'react';
 import {addPost, changeNewText, PostsType} from "../../../redux/propfile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
