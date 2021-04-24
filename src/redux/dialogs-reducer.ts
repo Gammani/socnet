@@ -1,14 +1,11 @@
 import {v1} from "uuid";
 
-type UpdateNewMessageBodyActionType = {
-    type: "UPDATE-NEW-MESSAGE-BODY"
-    body: string
-}
 type SendMessageActionType = {
     type: "SEND-MESSAGE"
+    newMassageBody: string
 }
 
-export type DialogsReducerActionType = ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
+export type DialogsReducerActionType = ReturnType<typeof sendMessageAC>
 
 type DialogsType = {
     id: string
@@ -22,7 +19,6 @@ type MessagesType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
-    newPostBody: string
 }
 
 let initialState: DialogsPageType = {
@@ -37,34 +33,24 @@ let initialState: DialogsPageType = {
         {id: v1(), message: "Hey"},
         {id: v1(), message: "Yo man"},
         {id: v1(), message: "hu you piople?"}
-    ],
-    newPostBody: ""
+    ]
 }
 
 
 const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsReducerActionType): DialogsPageType => {
     switch (action.type) {
-        case "UPDATE-NEW-MESSAGE-BODY":
-            return {
-                ...state,
-                newPostBody: action.body
-            }
         case "SEND-MESSAGE":
-            let body = state.newPostBody;
+            let body = action.newMassageBody;
             return {
                 ...state,
                 messages: [...state.messages, {id: v1(), message: body}],
-                newPostBody: ''
             }
         default:
             return state;
     }
 }
 
-export const sendMessageAC = (): SendMessageActionType => ({type: "SEND-MESSAGE"});
-export const updateNewMessageBodyAC = (body: string): UpdateNewMessageBodyActionType => ({
-    type: "UPDATE-NEW-MESSAGE-BODY",
-    body
-});
+export const sendMessageAC = (newMassageBody: string): SendMessageActionType => ({type: "SEND-MESSAGE", newMassageBody});
+
 
 export default dialogsReducer;
