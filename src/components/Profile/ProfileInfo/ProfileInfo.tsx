@@ -4,6 +4,7 @@ import Preloader from "../../../common/Preloader/Preloader";
 import userPhoto from '../../../assets/images/user.png';
 import ProfileStatus from './ProfileStatus';
 
+
 type PropsType = {
     profile: ProfileType
     status: string
@@ -16,9 +17,6 @@ const ProfileInfo = (props: PropsType) => {
     }
     return (
         <div>
-            {/*<div className={s.hat}>*/}
-            {/*    <img src="https://interier-foto.ru/wp-content/uploads/dlinnye-foto-4.jpg" alt={"заставка"}/>*/}
-            {/*</div>*/}
             <div>
                 <div>
                     <img src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt={"аватар пользователя"}/>

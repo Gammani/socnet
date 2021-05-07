@@ -70,7 +70,7 @@ export type ProfileReducerActionsType =
 let initialState: ProfilePageType = {
     posts: [
         {id: v1(), message: "Hello, it's my first post lol", likesCount: 777},
-        {id: v1(), message: "hu a you man?", likesCount: 1327}
+        {id: v1(), message: "How are you?", likesCount: 1327}
     ] as Array<PostsType>,
     messageForNewPost: "",
     profile: null,
